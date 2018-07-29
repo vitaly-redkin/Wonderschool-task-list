@@ -45,7 +45,10 @@
 
     "no-parameter-properties": false,
     "no-increment-decrement": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "trailing-comma": false,
+    "no-trailing-whitespace": false,
+    "prefer-object-spread": false
   },
   "rulesDirectory": [
     "node_modules/tslint-lines-between-class-members"

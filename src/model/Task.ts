@@ -5,7 +5,7 @@
 import { TaskBare } from './TaskBare';
 
 export class Task extends TaskBare {
-  /** 
+  /**
    * true if the task is locked because at least one of it direct or 
    * indirect dependents is not completed yet. 
    * This is a calculated field set by the TaskManager functions on 
@@ -22,7 +22,7 @@ export class Task extends TaskBare {
   public readonly dependentIds: number[] = [];
 
   /**
-   * 
+   *
    * @param id Task ID
    * @param task Task name
    * @param group Name of the group the task belongs to
@@ -42,10 +42,10 @@ export class Task extends TaskBare {
 
   /**
    * Converts task supplied from the exernal source to the "normal" one.
-   * 
+   *
    * @param taskBare Task as ssupplied from the external source
    */
-  static createFromBare(taskBare: TaskBare): Task {
+  public static CREATE_FROM_BARE(taskBare: TaskBare): Task {
     return new Task(
       taskBare.id, taskBare.task, taskBare.group, 
       taskBare.dependencyIds, taskBare.completedAt);

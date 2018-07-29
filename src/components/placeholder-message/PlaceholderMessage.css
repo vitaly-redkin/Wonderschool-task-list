@@ -1,0 +1,13 @@
+.placeholder-row
+{
+  width: 100%;
+  height: 27px;
+  padding-right: 0;
+  margin-bottom: 1rem;
+}
+
+.placeholder-text
+{
+  color: #cccccc;
+  font-style: italic;
+}
