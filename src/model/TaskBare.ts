@@ -1,5 +1,5 @@
 /**
- * Class to contain task details as suplied from the server.
+ * Class to contain task details as supplied from the server.
  */
 
  import { BaseEntity } from './BaseEntity';

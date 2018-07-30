@@ -1,3 +1,7 @@
+/**
+ * Application "entry point" component.
+ */
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as ReactGA from 'react-ga';

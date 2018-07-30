@@ -61,7 +61,7 @@ const renderList = <TId, TEntity extends BaseEntity<TId>>(
  * 
  * @param lineComponent Line componnet to render
  * @param entities List of line entities
- * @param placeHolderMessage Message to show in placeholder when there are no lins
+ * @param placeHolderMessage Message to show in placeholder when there are no lines
  * @param titleMessage Component title message
  * @param titleLinkCaption Component title link caption (if emoty renders no link)
  * @param titleLinkUrl Component link URL
@@ -80,11 +80,12 @@ export const list = <TId, TEntity extends BaseEntity<TId>>(
         <Col className='list-title'>
           {titleMessage}
         </Col>
-        {(titleLinkCaption !== '' &&
-        <Col className='list-title-link'>
-          <Link to={titleLinkUrl} className='list-title-link'>{titleLinkCaption}</Link>
-        </Col>
-        )}
+        {
+          titleLinkCaption !== '' &&
+          <Col className='list-title-link'>
+            <Link to={titleLinkUrl} className='list-title-link'>{titleLinkCaption}</Link>
+          </Col>
+        }
       </Row>
       <Row>
         <Container>

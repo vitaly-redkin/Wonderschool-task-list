@@ -15,6 +15,7 @@ import lockedImage from '../../images/Locked.svg';
 import completedImage from '../../images/Completed.svg';
 import incompleteImage from '../../images/Incomplete.svg';
 
+// Component props type
 type TaskLineProps = 
   ListLineProps<number, Task> & 
   typeof actionCreators;

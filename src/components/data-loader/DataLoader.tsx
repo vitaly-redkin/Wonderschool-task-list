@@ -13,7 +13,7 @@ import { IApplicationState } from '../../store';
 
 import './DataLoader.css';
 
-// Component properties type
+// Component own properties type
 class DataLoaderOwnProps {
   public json: string;
   public lastError: string;
@@ -25,6 +25,7 @@ type DataLoaderProps =
   typeof actionCreators;
 
 class DataLoader extends React.PureComponent<DataLoaderProps> {
+  // Ref to the text area
   private editRef: React.RefObject<HTMLTextAreaElement | null> = 
     React.createRef<HTMLTextAreaElement | null>();
 
@@ -65,7 +66,7 @@ class DataLoader extends React.PureComponent<DataLoaderProps> {
   }
 
   /**
-   * Loads JSON data for tasks.
+   * Loads edited JSON data for tasks.
    */
   private loadData = (): void => {
     const json: string = this.editRef.current!.value.trim();

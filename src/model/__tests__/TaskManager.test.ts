@@ -98,6 +98,7 @@ describe('Task completed change properly handled - recursively', () => {
 
 
 describe('Task completed change properly handled - recursively when task is uncompleted', () => {
+  // Complete all tasks
   const source: TaskBare[] = DataSamples.normalSample.map(
     (item: TaskBare) => { return {...item, completedAt: new Date()}; });
   const tasks: Task[] = TaskManager.prepareTaskList(source);
@@ -110,7 +111,7 @@ describe('Task completed change properly handled - recursively when task is unco
     expect(unlockedTasks.length).toBe(tasks.length);
   });
 
-  it('Task 6 depends on 2, 4, 3 which all depends on 1. When 1 is uncompleted, 2, 3, 4 and 6 should be locked', () => {
+  it('Task 6 depends on 2, 4, 3 which all depends on 1. When 1 is uncompleted, 2, 3, 4 and 6 should be locked and incomplete', () => {
     let updatedTasks: Task[] = tasks;
     const task1: Task = TaskManager.getTaskById(updatedTasks, 1);
     updatedTasks = TaskManager.setTaskCompletionState(tasks, task1, false);
@@ -122,6 +123,10 @@ describe('Task completed change properly handled - recursively when task is unco
     expect(task3.isLocked).toBeTruthy();
     expect(task4.isLocked).toBeTruthy();
     expect(task6.isLocked).toBeTruthy();
+    expect(task2.completedAt).toBeNull();
+    expect(task3.completedAt).toBeNull();
+    expect(task4.completedAt).toBeNull();
+    expect(task6.completedAt).toBeNull();
   });
 });
 

@@ -11,11 +11,11 @@ import { list } from '../list/list';
 import GroupLine from '../group-line/GroupLine';
 
 // Component properties type
-class GroupListOwnProps {
+class GroupListProps {
   public groups: Group[];
 }
 
-class GroupList extends React.PureComponent<GroupListOwnProps> {
+class GroupList extends React.PureComponent<GroupListProps> {
   public render(): JSX.Element {
     return list(
       GroupLine, 
@@ -26,7 +26,7 @@ class GroupList extends React.PureComponent<GroupListOwnProps> {
 }
 
 // Redux mapStateToProps function
-function mapStateToProps(state: IApplicationState): GroupListOwnProps {
+function mapStateToProps(state: IApplicationState): GroupListProps {
   const groups: Group[] = TaskManager.getGroups(state.taskList.allTasks);
 
   return {groups};

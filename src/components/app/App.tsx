@@ -12,7 +12,7 @@ import { Task } from '../../model/Task';
 import * as DataSamples from '../../model/DataSamples';
 import Main from '../main/Main';
 
-// Application initial state
+// Application initial state - use on of the test samples
 const allTasks: Task[] = TaskManager.prepareTaskList(DataSamples.normalSample);
 const initialState: IApplicationState = { taskList: { allTasks, lastError: ''} };
 

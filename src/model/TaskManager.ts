@@ -11,7 +11,7 @@ import { Group } from './Group';
 
 /**
  * Checks if the source data contains loops. 
- * If it does return the first discovered loop as a list of task Ids.
+ * If it does - returns the first discovered loop as a list of task Ids.
  * 
  * @param allTasksBare List of tasks as supplied by the external source
  * @returns List of the task IDs which create the first discovered loop
@@ -32,7 +32,7 @@ export function findLoop(allTasksBare: TaskBare[]): number[] {
  * - converts to the "normal" tasks
  * - removes 'orphan' dependent task IDs
  * - set task dependents
- * - sets task locked state
+ * - sets task locked and completed state
  * 
  * @param allTasksBare List of tasks as supplied by the external source
  * @returns List of the tasks ready to use in the UI
@@ -45,7 +45,7 @@ export function prepareTaskList(allTasksBare: TaskBare[]): Task[] {
     (item: Task) => setTaskDependents(tasksWithoutOrphanDependencies, item));
 
   return tasksWithDependentsSet.map(
-    (item: Task) => setTaskLockedStateByDependencies(tasksWithoutOrphanDependencies, item));
+    (item: Task) => setTaskStateByDependencies(tasksWithoutOrphanDependencies, item));
 }
 
 /**
@@ -89,7 +89,7 @@ export function getGroupTasks(tasks: Task[], group: string): Task[] {
 
 /**
  * Sets task completion status. 
- * If it has actually changed update the locked status of the tasks which depends on this one.
+ * If it has actually changed update the locked and completed status of the tasks which depends on this one.
  * 
  * @param allTasks List of all tasks to update when the given task completed status has been changed
  * @param task Task to set the completion status of
@@ -101,7 +101,7 @@ export function setTaskCompletionState(
     task: Task, 
     isCompleted: boolean
   ): Task[] {
-  // We cannot complete an incompleted task
+  // We cannot complete a locked task
   // For this example I just do nothing.
   // In the real life I will throw an exception or return an empty list 
   // or some flag to allow the caller method to handle an error.
@@ -116,13 +116,13 @@ export function setTaskCompletionState(
   const newAllTasks = allTasks.map(
     (item: Task) => item.id === newTask.id ? newTask : item);
 
-  return updateTaskParentsLockedState(newAllTasks, newTask);
+  return updateTaskParentsState(newAllTasks, newTask);
 }
 
 /**
  * Finds the task with the given ID. If not found throws an exception.
- * This function should be called for the already prepared task list 
- * so the exception is unlikely to be thrown - thus no special exeption type
+ * This function should be called for the already cleansed task list 
+ * so the exception is unlikely to be thrown - thus no special exception type
  * has been defined for this example.
  * 
  * @param tasks List of tasks to find the one with the given ID
@@ -155,29 +155,29 @@ export function stripToBare(tasks: Task[]): TaskBare[] {
 // Internal utility functions
 
 /**
- * Updates locked state of all tasks which are the parent of the given one.
+ * Updates locked and completed state of all tasks which are the parents of the given one.
  * 
  * @param allTasks List of all tasks to process
  * @param task Task to process parents of
  * @returns Updated task list
  */
-function updateTaskParentsLockedState(allTasks: Task[], task: Task): Task[] {
+function updateTaskParentsState(allTasks: Task[], task: Task): Task[] {
   const newAllTasks: Task[] = allTasks.slice();
   const visitedTasks: Task[] = [];
-  updateTaskParentsLockedStateInternal(newAllTasks, task, visitedTasks);
+  updateTaskParentsStateInternal(newAllTasks, task, visitedTasks);
 
   return newAllTasks;
 }
 
 /**
- * Updates locked state of all tasks which are the parent of the given one (recursively).
+ * Updates locked and completed state of all tasks which are the parent of the given one (recursively).
  * For simplification purposes replaces elements of the allTasks array with updates tasks.
  * 
  * @param allTasks List of all tasks to process
  * @param task Task to process parents of
  * @param visitedTasks List of already visited tasks (for optimization purposes)
  */
-function updateTaskParentsLockedStateInternal(
+function updateTaskParentsStateInternal(
   allTasks: Task[], 
   task: Task,
   visitedTasks: Task[], 
@@ -188,10 +188,10 @@ function updateTaskParentsLockedStateInternal(
       if (getTaskOrUndefinedById<Task>(visitedTasks, id) === undefined) {
         const dependent: Task = getTaskById(allTasks, id);
         visitedTasks.push(dependent);
-        const updatedDependent: Task = setTaskLockedStateByDependencies(allTasks, dependent);
+        const updatedDependent: Task = setTaskStateByDependencies(allTasks, dependent);
         const index = allTasks.findIndex((item: Task) => item.id === updatedDependent.id);
         allTasks[index] = updatedDependent;
-        updateTaskParentsLockedStateInternal(allTasks, updatedDependent, visitedTasks);
+        updateTaskParentsStateInternal(allTasks, updatedDependent, visitedTasks);
       }
     });
 }
@@ -213,7 +213,7 @@ function removeOrphanDependents(allTasks: Task[], task: Task): Task {
 /**
  * Sets task dependents (IDs of tasks locked before this one is completed).
  * 
- * @param allTasks List of all tasks to find the dependendents fo
+ * @param allTasks List of all tasks to find the dependendents for
  * @param task Task to set the dependents for
  * @param task Updated task
  */
@@ -228,16 +228,18 @@ function setTaskDependents(allTasks: Task[], task: Task): Task {
 }
 
 /**
- * Sets task locked state buy ensuring all dependencies are completed.
+ * Sets task locked and completed state by ensuring all dependencies are completed.
  * 
  * @param allTasks List of all tasks to find the dependencies in
  * @param task Task to set the locked state for
  * @param task Updated task
  */
-function setTaskLockedStateByDependencies(allTasks: Task[], task: Task): Task {
+function setTaskStateByDependencies(allTasks: Task[], task: Task): Task {
   const isLocked: boolean = hasUncompletedDependency(allTasks, task);
+  // Locked task (i.e. the one with uncompete dependencies cannot be completed itself)
+  const completedAt: Date | null = (isLocked ? null : task.completedAt);
 
-  return {...task, isLocked};
+  return {...task, isLocked, completedAt};
 }
 
 /**
@@ -258,7 +260,10 @@ function hasUncompletedDependency(allTasks: Task[], task: Task): boolean {
     if (dependency.completedAt === null) {
       return true;
     } else {
-      return hasUncompletedDependency(allTasks, dependency);
+      const result = hasUncompletedDependency(allTasks, dependency);
+      if (result) {
+        return true;
+      }
     }
   }
 
@@ -318,7 +323,7 @@ function findLoopForTaskInternal(
     const dependency: TaskBare | undefined = getTaskOrUndefinedById<TaskBare>(
       allTasksBare, dependencyId);
     if (dependency === undefined) {
-      continue; // 'Orphan' dependency - this would be dealt otn the later stage
+      continue; // 'Orphan' dependency - this would be dealt with on the later stage
     }
 
     if (path.findIndex((item: number) => (item === dependency.id)) >= 0) {
