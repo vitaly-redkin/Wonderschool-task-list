@@ -48,7 +48,8 @@
     "ordered-imports": false,
     "trailing-comma": false,
     "no-trailing-whitespace": false,
-    "prefer-object-spread": false
+    "prefer-object-spread": false,
+    "no-debugger": false
   },
   "rulesDirectory": [
     "node_modules/tslint-lines-between-class-members"

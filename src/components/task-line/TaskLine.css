@@ -33,12 +33,12 @@
 .task-line-text,
 .task-line-text-completed
 {
-  color: #888888;
+  color: #444444;
 }
 
 .task-line-text-locked
 {
-  color: #cccccc;
+  color: #aaaaaa;
 }
 
 .task-line-text-completed

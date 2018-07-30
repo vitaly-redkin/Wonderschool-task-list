@@ -43,11 +43,22 @@ export class Task extends TaskBare {
   /**
    * Converts task supplied from the exernal source to the "normal" one.
    *
-   * @param taskBare Task as ssupplied from the external source
+   * @param taskBare Task as supplied from the external source
    */
   public static CREATE_FROM_BARE(taskBare: TaskBare): Task {
     return new Task(
       taskBare.id, taskBare.task, taskBare.group, 
       taskBare.dependencyIds, taskBare.completedAt);
+  }
+
+  /**
+   * Converts the given Task objects to TaskBare one.
+   * 
+   * @param task Task to convert
+   */
+  public static STRIP_TO_BARE(task: Task): TaskBare {
+    return new TaskBare(
+      task.id, task.task, task.group, 
+      task.dependencyIds, task.completedAt);
   }
 }

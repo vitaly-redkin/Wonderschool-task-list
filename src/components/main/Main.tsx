@@ -6,6 +6,7 @@ import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import Routes from '../routes/Routes';
+import DataLoader from '../data-loader/DataLoader';
 import './Main.css';
 
 // Required to make the component "withRouter-enabled".
@@ -17,11 +18,11 @@ export class Main extends React.PureComponent<RouteComponentProps<IDummyProps>> 
     return (
       <Container className='main-container'>
         <Row>
-          <Col className='main-left'>
+          <Col>
             <Routes />
           </Col>
-          <Col className='main-right'>
-            Placeholder for data
+          <Col>
+            <DataLoader />
           </Col>
         </Row>
       </Container>

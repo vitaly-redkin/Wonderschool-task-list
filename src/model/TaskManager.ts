@@ -138,6 +138,19 @@ export function getTaskById(tasks: Task[], id: number): Task {
   return task;
 }
 
+/**
+ * Converts list of Task objects to TaskBare ones.
+ * 
+ * @param tasks List of Task objects to convert to TaskBare ones
+ */
+export function stripToBare(tasks: Task[]): TaskBare[] {
+  return tasks.reduce(
+    (result: TaskBare[], task: Task): TaskBare[] => 
+      result.concat(Task.STRIP_TO_BARE(task)),
+    []
+  );
+}
+
 // --------------------------
 // Internal utility functions
 
