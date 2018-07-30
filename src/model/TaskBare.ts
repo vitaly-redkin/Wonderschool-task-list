@@ -2,7 +2,9 @@
  * Class to contain task details as suplied from the server.
  */
 
- export class TaskBare {
+ import { BaseEntity } from './BaseEntity';
+
+ export class TaskBare extends BaseEntity<number> {
    /**
     * 
     * @param id Task ID
@@ -19,5 +21,6 @@
     public readonly dependencyIds: number[],
     public readonly completedAt: Date | null,
    ) {
+     super(id);
    }
  }

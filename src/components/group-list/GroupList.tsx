@@ -10,7 +10,7 @@ import { Group } from '../../model/Group';
 import * as TaskManager from '../../model/TaskManager';
 import { IApplicationState } from '../../store';
 import { PlaceholderMessage } from '../placeholder-message/PlaceholderMessage';
-import { composeTaskListPath } from '../main/Main';
+import { composeTaskListPath } from '../../util/AppRoutes';
 
 // Component properties type
 class GroupListOwnProps {
@@ -31,9 +31,10 @@ class GroupList extends React.PureComponent<GroupListProps> {
     return (
       <Container className='pl-0 pr-0'>
         {groups.map((group: Group) => (
-          <Row>
+          <Row key={group.name} >
             <Link 
-              key={group.name} to={composeTaskListPath(group.name)}>{group.name}</Link> 
+              to={composeTaskListPath(group.name)}>{group.name}
+            </Link> 
          </Row>
         ))}
       </Container>

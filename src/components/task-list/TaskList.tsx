@@ -10,7 +10,7 @@ import { Task } from '../../model/Task';
 import * as TaskManager from '../../model/TaskManager';
 import { IApplicationState } from '../../store';
 import { actionCreators } from '../../store/TaskListHandler';
-import { Routes } from '../main/Main';
+import { AppRoutes } from '../../util/AppRoutes';
 import { PlaceholderMessage } from '../placeholder-message/PlaceholderMessage';
 import TaskLine from '../task-line/TaskLine';
 
@@ -38,7 +38,7 @@ class TaskList extends React.PureComponent<TaskListProps> {
             {this.props.match.params.group}
           </Col>
           <Col>
-            <Link to={Routes.Groups}>All Groups</Link>
+            <Link to={AppRoutes.Groups}>All Groups</Link>
           </Col>
         </Row>
         <Row>

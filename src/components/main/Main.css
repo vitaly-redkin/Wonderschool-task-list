@@ -1,7 +1,14 @@
 .main-container
 {
-  max-width: 450px;
-  width: 100%;
-  padding: 10px;
-  height: 100vh;
+  padding-top: 2rem;
+}
+
+.main-left
+{
+  background-color: yellow;
+}
+
+.main-right
+{
+  background-color: greenyellow;
 }
