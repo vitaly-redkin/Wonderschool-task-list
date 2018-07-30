@@ -1,0 +1,47 @@
+.task-line-row
+{
+  cursor: pointer;
+}
+
+.task-line-locked
+{
+  cursor: inherit;
+}
+
+.task-line-image
+{
+  width: 16px;
+  height: 16px;
+}
+
+.task-line-image-locked
+{
+  width: 10px;
+  height: 12px;
+  margin-left: 4px;
+}
+
+.task-line-text,
+.task-line-text-locked,
+.task-line-text-completed
+{
+  font-size: 0.875rem;
+  font-weight: 600;
+  align-self: flex-end;
+}
+
+.task-line-text,
+.task-line-text-completed
+{
+  color: #888888;
+}
+
+.task-line-text-locked
+{
+  color: #cccccc;
+}
+
+.task-line-text-completed
+{
+  text-decoration: line-through;
+}

@@ -15,7 +15,7 @@ export class PlaceholderMessage extends React.PureComponent<IPlaceholderMessageP
   public render(): JSX.Element {
     return (
       <Row className='placeholder-row'>
-        <Col className='text-center my-auto pr-0' >
+        <Col className='my-auto pr-0' >
           <div className='placeholder-text'>{this.props.message}</div>
         </Col>
       </Row>

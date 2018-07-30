@@ -1,9 +1,12 @@
 .placeholder-row
 {
   width: 100%;
-  height: 27px;
   padding-right: 0;
-  margin-bottom: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  border-bottom-width: 1px;
+  border-bottom-color: #eeeeee;
+  border-bottom-style: solid;
 }
 
 .placeholder-text

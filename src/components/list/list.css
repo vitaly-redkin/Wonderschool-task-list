@@ -1,0 +1,24 @@
+.list-title
+{
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #888888;
+}
+
+.list-title-link
+{
+  align-self: flex-end;
+}
+
+a.list-title-link
+{
+  font-size: 0.875rem;
+}
+
+.list-line-container,
+.list-title-row
+{
+  border-bottom-width: 1px;
+  border-bottom-color: #eeeeee;
+  border-bottom-style: solid;
+}

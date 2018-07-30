@@ -4,14 +4,12 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, Link } from 'react-router-dom';
-import { Container, Row, Col } from 'reactstrap';
+import { RouteComponentProps } from 'react-router-dom';
 import { Task } from '../../model/Task';
 import * as TaskManager from '../../model/TaskManager';
 import { IApplicationState } from '../../store';
-import { actionCreators } from '../../store/TaskListHandler';
 import { AppRoutes } from '../../util/AppRoutes';
-import { PlaceholderMessage } from '../placeholder-message/PlaceholderMessage';
+import { list } from '../list/list';
 import TaskLine from '../task-line/TaskLine';
 
 // Component properties type
@@ -26,49 +24,18 @@ interface ITaskListUrlParams {
 
 type TaskListProps = 
   TaskListOwnProps & 
-  RouteComponentProps<ITaskListUrlParams> & 
-  typeof actionCreators;
+  RouteComponentProps<ITaskListUrlParams>;
 
 class TaskList extends React.PureComponent<TaskListProps> {
   public render(): JSX.Element {
-    return (
-      <Container className='pl-0 pr-0'>
-        <Row>
-          <Col>
-            {this.props.match.params.group}
-          </Col>
-          <Col>
-            <Link to={AppRoutes.Groups}>All Groups</Link>
-          </Col>
-        </Row>
-        <Row>
-          <Container>
-            {this.renderList()}
-          </Container>
-        </Row>
-      </Container>
-    );
+    return list(
+      TaskLine, 
+      this.props.groupTasks, 
+      'No tasks exist for this group',
+      this.props.match.params.group,
+      'ALL GROUPS',
+      AppRoutes.Groups);
   }
-
-  /**
-   * Renders task list (or a place holder if there are now tasks).
-   */
-  private renderList(): JSX.Element {
-    const groupTasks: Task[] = this.props.groupTasks;
-    if (groupTasks.length === 0) {
-      return (
-        <PlaceholderMessage message='No tasks exist for this group' />
-      );
-    }
-
-    return (
-      <>
-        {groupTasks.map((task: Task) => (
-          <TaskLine key={task.id} task={task} />
-        ))}
-      </>
-    );
-  }  
 }
 
 // Redux mapStateToProps function

@@ -1,0 +1,25 @@
+.group-line-row
+{
+  cursor: pointer;
+}
+
+.group-line-image
+{
+  width: 8px;
+  height: 8px;
+}
+
+.group-line-text
+{
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #888888;
+}
+
+.group-line-subtext
+{
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #cccccc;
+}
+
